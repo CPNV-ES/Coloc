@@ -21,7 +21,7 @@ namespace Coloc.Controllers
         // GET: Todos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Todos.ToListAsync());
+            return View(await _context.Todos.Include(t => t.Tasks).ToListAsync());
         }
 
         // GET: Todos/Details/5
@@ -33,7 +33,11 @@ namespace Coloc.Controllers
             }
 
             var todos = await _context.Todos
+                .Include(r => r.Tasks)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            
+
             if (todos == null)
             {
                 return NotFound();
