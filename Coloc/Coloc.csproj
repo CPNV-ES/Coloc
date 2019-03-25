@@ -15,4 +15,8 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\tasksTodo.js" />
+  </ItemGroup>
+
 </Project>
