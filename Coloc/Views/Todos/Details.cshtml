@@ -4,24 +4,23 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
 
 <div>
-    <h4>Todos</h4>
+    <h2>Todo</h2>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+       <!-- <dt>
             @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
+        </dt>-->
+        <h3>
             @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
+        </h3>
+       <!-- <dt>
             @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
+        </dt> -->
+        <h4>
             @Html.DisplayFor(model => model.Description)
-        </dd>
+        </h4>
     </dl>
 </div>
 
@@ -31,18 +30,18 @@
     <thead>
         <tr>
             <th>
-                Tache
+                Tâche
             </th>
             <th>
-               Description
+                Description
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="show-task-todo">
         @foreach (var task in Model.Tasks)
         {
-            <tr>
+            <tr >
                 <td>
                     @Html.DisplayFor(modelItem => task.Title)
                 </td>
@@ -50,9 +49,9 @@
                     @Html.DisplayFor(modelItem => task.Description)
                 </td>
                 <td>
-                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@task.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@task.Id">Delete</a>
+                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
+                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
+                    <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
                 </td>
             </tr>
         }
@@ -61,10 +60,50 @@
 </table>
 
 
+<div class="row">
+    <div class="d-flex align-items-center justify-content-between col-sm-12">
+       <!-- <div>
+            <h2>Ajouter tâche</h2>
+        </div> -->
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-task-todo" aria-expanded="false" aria-controls="collapseExample">
+            Ajouter une tâche
+        </button>
+    </div>
+</div>
+
+<!-- Add jquery/ajax button to create a new task directly assigned to the todo -->
+<div class="row">
+    <div class="collapse col-sm-12 mt-3" id="add-task-todo">
+        <div class="card card-body" id="purchase-new">
+            <form id="task-todo-add">
+                <input id="todoId" name="todoId" value="@Model.Id" class="hidden"  />
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        <label for="title">Titre</label>
+                        <input type="text" id="title" name="title" value="" class="form-control is-invalid" />
+                        <span id="error-title" class="invalid-feedback p-1">Pas de titre</span>
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <label for="description">Descritpion</label>
+                        <input type="text" id="description" name="description" value="" class="form-control is-invalid" />
+                        <span id="error-description" class="invalid-feedback p-1">Pas de description</span>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="form-group col-sm-12 d-flex justify-content-end align-items-end m-0">
+                    <button id="add-task-todo-button" class="btn btn-warning " type="button" >Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+   <!-- <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |-->
+    <a asp-action="Index"> Back to List</a>
 </div>
+
+<script src="~/js/tasksTodo.js" asp-append-version="true"></script>
