@@ -84,7 +84,17 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
-            ViewData["TaskId"] = new SelectList(_context.Tasks, "Id", "Description", userTasks.TaskId);
+            ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
+
+            //  Change the task of a user. List in a format: Todo - Task
+            ViewData["TaskId"] = from u in _context.Tasks.OrderBy(r => r.Title).OrderBy(r => r.Todo)
+                                  select new SelectListItem
+                                  {
+                                      Value = u.Id.ToString(),
+                                      Text = u.Todo.Title + " - " + u.Title
+                                  };
+
+
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userTasks.UserId);
             return View(userTasks);
         }
