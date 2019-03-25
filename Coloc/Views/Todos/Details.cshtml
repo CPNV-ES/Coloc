@@ -7,18 +7,21 @@
 
 <div>
     <h2>Todo</h2>
+    <div class="col-md-12 text-right"><a asp-action="Index">Liste des Todos</a></div>
     <hr />
     <dl class="dl-horizontal">
-       <!-- <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>-->
+        <!-- <dt>
+             @Html.DisplayNameFor(model => model.Title)
+         </dt>-->
         <h3>
+
             @Html.DisplayFor(model => model.Title)
         </h3>
-       <!-- <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt> -->
+        <!-- <dt>
+             @Html.DisplayNameFor(model => model.Description)
+         </dt> -->
         <h4>
+
             @Html.DisplayFor(model => model.Description)
         </h4>
     </dl>
@@ -97,13 +100,6 @@
             </div>
         </div>
     </div>
-</div>
-
-
-
-<div>
-   <!-- <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |-->
-    <a asp-action="Index"> Back to List</a>
 </div>
 
 <script src="~/js/tasksTodo.js" asp-append-version="true"></script>

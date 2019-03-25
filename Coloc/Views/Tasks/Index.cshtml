@@ -5,10 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Liste des tâches</h2>
+<div class="col-md-12 text-right"><a asp-controller="Todos" asp-action="Index">Todo List</a></div>
+
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Nouvelle tâche</a>
 </p>
 <table class="table">
     <thead>
