@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Tâches des utilisateurs</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,23 +14,22 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Task)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BeginTask)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EndTask)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FinishTask)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.State)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Task)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
+
+
             <th></th>
         </tr>
     </thead>
@@ -38,23 +37,21 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Task.Description)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.BeginTask)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndTask)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FinishTask)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.State)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Task.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
