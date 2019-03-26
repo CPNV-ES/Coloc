@@ -5,99 +5,110 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Details des tâches</h2>
 
 <div>
-    <h4>AspNetUsers</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NormalizedUserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NormalizedUserName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NormalizedEmail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NormalizedEmail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SecurityStamp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ConcurrencyStamp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnd)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEnd)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEnabled)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AccessFailedCount)
-        </dd>
-    </dl>
+    <h4>@Html.DisplayFor(model => model.UserName)</h4>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tâches
+            </th>
+            <th>
+                Débute le
+            </th>
+            <th>
+                Termine le
+            </th>
+            <th>
+                Statut
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody id="show-usertasks-todo">
+        @foreach (var task in Model.UserTasks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => task.Task.Description)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => task.BeginTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => task.EndTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => task.State)
+                </td>
+                <td>
+                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
+                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
+                    <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="d-flex align-items-center justify-content-between col-sm-12">
+        <!-- <div>
+             <h2>Ajouter tâche</h2>
+         </div> -->
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-task-user" aria-expanded="false" aria-controls="collapseExample">
+            Ajouter une tâche
+        </button>
+    </div>
+</div>
+
+<!-- Add jquery/ajax button to create a new task directly assigned to the todo -->
+<div class="row">
+    <div class="collapse col-sm-12 mt-3" id="add-task-user">
+        <div class="card card-body">
+            <form id="task-user-add">
+                <input id="userId" name="userId" value="@Model.Id" class="hidden" />
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        <label for="title">Tâche</label>
+                        <input type="text" id="task" name="task" value="" class="form-control is-invalid" />
+                        <span id="error-task" class="invalid-feedback p-1">Pas de titre</span>
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <label for="description">Débute le</label>
+                        <input type="text" id="beginDate" name="beginDate" value="" class="form-control is-invalid" />
+                        <span id="error-begin-date" class="invalid-feedback p-1">Pas de date début</span>
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <label for="description">Termine le</label>
+                        <input type="text" id="endDate" name="endDate" value="" class="form-control is-invalid" />
+                        <span id="error-end-date" class="invalid-feedback p-1">Pas de date de fin</span>
+                    </div>
+                    <div class="form-group col-sm-10">
+                        <label for="description">Statut</label>
+                        <input type="text" id="state" name="state" value="0" class="form-control is-invalid" />
+                        <span id="error-state" class="invalid-feedback p-1">Pas de statut</span>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="form-group col-sm-12 d-flex justify-content-end align-items-end m-0">
+                    <button id="add-task-user-button" class="btn btn-warning " type="button">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script src="~/js/tasksUser.js" asp-append-version="true"></script>
