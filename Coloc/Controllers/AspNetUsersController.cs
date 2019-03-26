@@ -21,7 +21,10 @@ namespace Coloc.Controllers
         // GET: AspNetUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AspNetUsers.ToListAsync());
+           return View(await _context.AspNetUsers
+                .Include(r => r.AspNetUserRoles)
+                .ThenInclude(s => s.Role)
+                .ToListAsync());
         }
 
         // GET: AspNetUsers/Details/5
@@ -31,8 +34,17 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
+            string userId = id;
+            var aspNetUsers2 = await _context.AspNetUsers
+                .FromSql($"SELECT anu.*, Tasks.Title as taskTitle, Tasks.Description as taskDescription FROM AspNetUsers as anu INNER JOIN UserTasks ON anu.Id = UserTasks.UserId INNER JOIN Tasks ON UserTasks.TaskId = Tasks.Id WHERE anu.Id={userId}") // test with 0bc161dd-b114-4643-b598-dda9f0b1a50d
+                .Include(r => r.UserTasks)
+                .ThenInclude( s=> s.Task)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
+            // Can remove aspNetUsers2
             var aspNetUsers = await _context.AspNetUsers
+                .Include(r => r.UserTasks)
+                .ThenInclude(s => s.Task)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aspNetUsers == null)
             {
@@ -72,7 +84,10 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
-            var aspNetUsers = await _context.AspNetUsers.FindAsync(id);
+            var aspNetUsers = await _context.AspNetUsers
+                .Include(r => r.AspNetUserRoles)
+                .ThenInclude(s => s.Role)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (aspNetUsers == null)
             {
                 return NotFound();
