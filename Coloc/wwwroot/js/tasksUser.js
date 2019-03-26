@@ -1,19 +1,20 @@
 ﻿$(document).ready(function () {
-    /* Add new task to a user*/
-    $("#add-task-todo-button").on("click", function (e) {
+     /* Add new task to a user*/
+    $("#add-task-user-button").on("click", function (e) {
         console.log('AHAHAHA');
         e.preventDefault();
         //get input data
-        console.log($("#task-todo-add #title").val());
-        var title = $("#task-todo-add #title").val();
-        var description = $("#task-todo-add #description").val();
-        var todoId = $("#task-todo-add #todoId").val();
+        console.log("UserId: "+$("#task-user-add #userId").val());
+        var task = $("#task-user-add #task").val();
+        var beginDate = $("#task-user-add #beginDate").val();
+        var endDate = $("#task-todo-add #endDate").val();
+        var state = $("#task-todo-add #state").val();
         //send data to api to store new vaucher
-        add(title, description, todoId);
+       // add(task, beginDate, endDate, state);
     });
 });
 
-function add(title, description, todoId){
+function add(task, beginDate, endDate, state){
     let current_datetime = new Date()
     let formatted_date = current_datetime.getFullYear() + "/" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
 
@@ -22,7 +23,7 @@ function add(title, description, todoId){
         accepts: "application/json",
         contentType: "application/json",
         type: "POST",
-        url: '/api/TasksApi',
+        url: '/api/UserTasksApi',
         data: JSON.stringify({ Title: title, Description: description, TodoId: todoId}),
     })
         .done(function (data) {
