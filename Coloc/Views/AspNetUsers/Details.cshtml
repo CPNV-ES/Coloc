@@ -1,4 +1,4 @@
-﻿@model Coloc.Models.AspNetUsers
+﻿@model Tuple<Coloc.Models.AspNetUsers, Coloc.Models.UserTasks>
 
 @{
     ViewData["Title"] = "Details";
@@ -8,10 +8,10 @@
 <h2>Details des tâches</h2>
 
 <div>
-    <h4>@Html.DisplayFor(model => model.UserName)</h4>
+    <h4>@Html.DisplayFor(tuple => tuple.Item1.UserName)</h4>
 </div>
 <table class="table">
-    <thead>
+    <thead>@Model.Item1.UserTasks.
         <tr>
             <th>
                 Tâches
@@ -31,13 +31,13 @@
         </tr>
     </thead>
     <tbody id="show-usertasks-todo">
-        @foreach (var task in Model.UserTasks)
+        @foreach (var task in Model.Item1.UserTasks)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => task.Task.Description)
                 </td>
-
+                
                 <td>
                     @Html.DisplayFor(modelItem => task.BeginTask)
                 </td>
@@ -74,27 +74,27 @@
     <div class="collapse col-sm-12 mt-3" id="add-task-user">
         <div class="card card-body">
             <form id="task-user-add">
-                <input id="userId" name="userId" value="@Model.Id" class="hidden" />
+                <input id="userId" name="userId" value="@Model.Item1.Id" class="hidden" />
                 <div class="row">
-                    <div class="form-group col-sm-2">
-                        <label for="title">Tâche</label>
-                        <input type="text" id="task" name="task" value="" class="form-control is-invalid" />
-                        <span id="error-task" class="invalid-feedback p-1">Pas de titre</span>
+                    <div class="form-group col-sm-10">
+                        <label asp-for="Item2.TaskId" class="control-label"></label>
+                        <select id="taskId" asp-for="Item2.TaskId" class="form-control" asp-items="ViewBag.TaskId"></select>
+                        <span asp-validation-for="Item2.TaskId" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-10">
-                        <label for="description">Débute le</label>
-                        <input type="text" id="beginDate" name="beginDate" value="" class="form-control is-invalid" />
-                        <span id="error-begin-date" class="invalid-feedback p-1">Pas de date début</span>
+                        <label asp-for="Item2.BeginTask" class="control-label"></label>
+                        <input id="beginDate" name="beginDate" asp-for="Item2.BeginTask" class="form-control" />
+                        <span asp-validation-for="Item2.BeginTask" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-10">
-                        <label for="description">Termine le</label>
-                        <input type="text" id="endDate" name="endDate" value="" class="form-control is-invalid" />
-                        <span id="error-end-date" class="invalid-feedback p-1">Pas de date de fin</span>
+                        <label asp-for="Item2.EndTask" class="control-label"></label>
+                        <input id="endDate" name="endDate"asp-for="Item2.EndTask" class="form-control" />
+                        <span asp-validation-for="Item2.EndTask" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-10">
-                        <label for="description">Statut</label>
-                        <input type="text" id="state" name="state" value="0" class="form-control is-invalid" />
-                        <span id="error-state" class="invalid-feedback p-1">Pas de statut</span>
+                        <label asp-for="Item2.State" class="control-label"></label>
+                        <input id="state" name="state"asp-for="Item2.State" class="form-control" />
+                        <span asp-validation-for="Item2.State" class="text-danger"></span>
                     </div>
                 </div>
             </form>
