@@ -35,11 +35,6 @@ namespace Coloc.Controllers
                 return NotFound();
             }
             string userId = id;
-            var aspNetUsers2 = await _context.AspNetUsers
-                .FromSql($"SELECT anu.*, Tasks.Title as taskTitle, Tasks.Description as taskDescription FROM AspNetUsers as anu INNER JOIN UserTasks ON anu.Id = UserTasks.UserId INNER JOIN Tasks ON UserTasks.TaskId = Tasks.Id WHERE anu.Id={userId}") // test with 0bc161dd-b114-4643-b598-dda9f0b1a50d
-                .Include(r => r.UserTasks)
-                .ThenInclude( s=> s.Task)
-                .FirstOrDefaultAsync(m => m.Id == id);
 
             // Can remove aspNetUsers2
             var aspNetUsers = await _context.AspNetUsers
@@ -50,8 +45,23 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
+            var userTasks = await _context.UserTasks
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (userTasks == null)
+            {
+                return NotFound();
+            }
+            ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
 
-            return View(aspNetUsers);
+            //  Change the task of a user. List in a format: Todo - Task
+            ViewData["TaskId"] = from u in _context.Tasks.OrderBy(r => r.Title).OrderBy(r => r.Todo)
+                                 select new SelectListItem
+                                 {
+                                     Value = u.Id.ToString(),
+                                     Text = u.Todo.Title + " - " + u.Title
+                                 };
+            var tuple = new Tuple<AspNetUsers, UserTasks>(aspNetUsers, null);
+            return View(tuple);
         }
 
         // GET: AspNetUsers/Create
