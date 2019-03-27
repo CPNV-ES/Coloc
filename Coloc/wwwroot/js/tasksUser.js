@@ -4,7 +4,11 @@
         console.log('AHAHAHA');
         e.preventDefault();
         //get input data
-        console.log("UserId: "+$("#task-user-add #userId").val());
+        console.log("UserId: " + $("#task-user-add #userId").val());
+        console.log("task: " + $("#task-user-add #taskId").val());
+        console.log("begin Date: " + $("#task-user-add #beginDate").getDate());
+        console.log("end Date: " + $("#task-user-add #endDate").val());
+        console.log("state: " + $("#task-user-add #state").val());
         var task = $("#task-user-add #task").val();
         var beginDate = $("#task-user-add #beginDate").val();
         var endDate = $("#task-todo-add #endDate").val();
