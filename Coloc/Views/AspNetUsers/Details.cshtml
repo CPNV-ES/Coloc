@@ -11,51 +11,51 @@
     <h4>@Html.DisplayFor(tuple => tuple.Item1.UserName)</h4>
 </div>
 <table class="table">
-    <thead>@Model.Item1.UserTasks.
+    <thead>
+    <tr>
+        <th>
+            Tâches
+        </th>
+        <th>
+            Débute le
+        </th>
+        <th>
+            Termine le
+        </th>
+        <th>
+            Statut
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+</thead>
+<tbody id="show-usertasks-todo">
+    @foreach (var task in Model.Item1.UserTasks)
+    {
         <tr>
-            <th>
-                Tâches
-            </th>
-            <th>
-                Débute le
-            </th>
-            <th>
-                Termine le
-            </th>
-            <th>
-                Statut
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody id="show-usertasks-todo">
-        @foreach (var task in Model.Item1.UserTasks)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => task.Task.Description)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => task.BeginTask)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => task.EndTask)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => task.State)
-                </td>
-                <td>
-                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
-                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
-                    <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
-                </td>
-            </tr>
-        }
+            <td>
+                @Html.DisplayFor(modelItem => task.Task.Description)
+            </td>
 
-    </tbody>
+            <td>
+                @Html.DisplayFor(modelItem => task.BeginTask)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => task.EndTask)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => task.State)
+            </td>
+            <td>
+                <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
+                <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
+                <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
+            </td>
+        </tr>
+    }
+
+</tbody>
 </table>
 
 <div class="row">
@@ -83,17 +83,17 @@
                     </div>
                     <div class="form-group col-sm-10">
                         <label asp-for="Item2.BeginTask" class="control-label"></label>
-                        <input id="beginDate" name="beginDate" asp-for="Item2.BeginTask" class="form-control" />
+                        <input type="date" id="beginDate" name="beginDate" asp-for="Item2.BeginTask" class="form-control" />
                         <span asp-validation-for="Item2.BeginTask" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-10">
                         <label asp-for="Item2.EndTask" class="control-label"></label>
-                        <input id="endDate" name="endDate"asp-for="Item2.EndTask" class="form-control" />
+                        <input type="date" id="endDate" name="endDate" asp-for="Item2.EndTask" class="form-control" />
                         <span asp-validation-for="Item2.EndTask" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-10">
                         <label asp-for="Item2.State" class="control-label"></label>
-                        <input id="state" name="state"asp-for="Item2.State" class="form-control" />
+                        <input id="state" name="state" asp-for="Item2.State" class="form-control" />
                         <span asp-validation-for="Item2.State" class="text-danger"></span>
                     </div>
                 </div>
