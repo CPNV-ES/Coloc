@@ -12,50 +12,50 @@
 </div>
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            Tâches
-        </th>
-        <th>
-            Débute le
-        </th>
-        <th>
-            Termine le
-        </th>
-        <th>
-            Statut
-        </th>
-        <th>
-            Actions
-        </th>
-    </tr>
-</thead>
-<tbody id="show-usertasks-todo">
-    @foreach (var task in Model.Item1.UserTasks)
-    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => task.Task.Description)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => task.BeginTask)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => task.EndTask)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => task.State)
-            </td>
-            <td>
-                <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
-                <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
-                <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
-            </td>
+            <th>
+                Tâches
+            </th>
+            <th>
+                Débute le
+            </th>
+            <th>
+                Termine le
+            </th>
+            <th>
+                Statut
+            </th>
+            <th>
+                Actions
+            </th>
         </tr>
-    }
+    </thead>
+    <tbody id="show-usertasks-todo">
+        @foreach (var task in Model.Item1.UserTasks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => task.Task.Description)
+                </td>
 
-</tbody>
+                <td>
+                    @Html.DisplayFor(modelItem => task.BeginTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => task.EndTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => task.State)
+                </td>
+                <td>
+                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId">Modifier</a> |
+                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.TaskId">Détails</a> |
+                    <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId">Supprimer</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
 </table>
 
 <div class="row">
@@ -110,5 +110,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<environment include="Development">
+    <script src="~/js/tasksUser.js" asp-append-version="true"></script>
+</environment>
 
-<script src="~/js/tasksUser.js" asp-append-version="true"></script>

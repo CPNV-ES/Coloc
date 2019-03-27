@@ -44,11 +44,11 @@ function update() {
 }
 
 function getTask(data) {
-    let formatedBeginDate;
-    console.log(data.beginTask);
-    formatedBeginDate = data.beginTask.getFullYear() + "/" + (data.beginTask.getMonth() + 1) + "-" + data.beginTask.getDate() + " " + data.beginTask.getHours() + ":" + data.beginTask.getMinutes() + ":" + cdata.beginTask.getSeconds();
-   // let formatted_beginDate =  + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
-    //let formatted_endDate = 
+
+    data.beginTask = formatDate(data.beginTask)
+    data.endTask = formatDate(data.endTask)
+    console.log(data.beginTask)
+
     console.log("--------- IN FUNCTION GETTASK ------------")
     console.log(data)
     $.ajax({
@@ -67,4 +67,12 @@ function getTask(data) {
         .fail(function () {
             alert("La tâche n'existe pas")
         });
+}
+
+function formatDate(date) {
+
+    if (dateFormated = new Date(date)) {
+        return dateFormated.getFullYear() + "." + (dateFormated.getMonth()) + " - " + dateFormated.getDate() + " " + dateFormated.getHours() + ":" + dateFormated.getMinutes() + ":" + dateFormated.getSeconds();
+    }
+    else return false
 }
