@@ -5,8 +5,8 @@
         e.preventDefault();
         //get input data
         console.log($("#task-todo-add #title").val());
-        var title = $("#task-todo-add #title").val();
         var description = $("#task-todo-add #description").val();
+        var title = $("#task-todo-add #title").val();
         var todoId = $("#task-todo-add #todoId").val();
         //send data to api to store new vaucher
         add(title, description, todoId);
@@ -36,7 +36,7 @@ function add(title, description, todoId){
         })
         .fail(function () {
   
-            alert("Le bon d'achat n'a été pas crée");
+            alert("La tâche n'a pas été créée");
         });
 };
 
