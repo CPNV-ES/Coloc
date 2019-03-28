@@ -48,9 +48,9 @@
                     @Html.DisplayFor(modelItem => task.State)
                 </td>
                 <td>
-                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId">Modifier</a> |
-                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.TaskId">Détails</a> |
-                    <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId">Supprimer</a>
+                    <a asp-controller="UserTasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
+                    <a asp-controller="UserTasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
+                    <a asp-controller="UserTasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
                 </td>
             </tr>
         }

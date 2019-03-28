@@ -153,7 +153,8 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
-            return View(userTasks);
+            return RedirectToAction("Index", "AspNetUsers");
+            // return View(userTasks);
         }
 
         // POST: UserTasks/Delete/5
