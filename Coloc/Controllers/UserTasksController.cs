@@ -153,8 +153,7 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Index", "AspNetUsers");
-            // return View(userTasks);
+             return View(userTasks);
         }
 
         // POST: UserTasks/Delete/5
@@ -165,7 +164,9 @@ namespace Coloc.Controllers
             var userTasks = await _context.UserTasks.FindAsync(id);
             _context.UserTasks.Remove(userTasks);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            // Return to the list of users view
+            return RedirectToAction("Index", "AspNetUsers");
         }
 
         private bool UserTasksExists(int id)
