@@ -61,7 +61,7 @@ function getTask(data) {
             console.log(dataCallBack);
             $("#show-usertasks-todo").append(
                 "<tr> \
-                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td>" + data.state + "</td>"
+                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td>" + data.state + "</td><td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/Tasks/Delete/ " + data.id + ">Supprimer</a></td></tr>"
             );
         })
         .fail(function () {
@@ -69,10 +69,16 @@ function getTask(data) {
         });
 }
 
-function formatDate(date) {
 
-    if (dateFormated = new Date(date)) {
-        return dateFormated.getFullYear() + "." + (dateFormated.getMonth()) + " - " + dateFormated.getDate() + " " + dateFormated.getHours() + ":" + dateFormated.getMinutes() + ":" + dateFormated.getSeconds();
-    }
-    else return false
+// Format date to 'YYYY.MM.DD'
+function formatDate(date) {
+    // https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date
+    let myDate = new Date(date) //Convert the date(often string type) to a datetype
+
+    // Convert to the correct format
+    let myDateString = ('0' + myDate.getDate()).slice(-2) + '.'
+        + ('0' + (myDate.getMonth() + 1)).slice(-2) + '.'
+        + myDate.getFullYear();
+
+    return myDateString
 }
