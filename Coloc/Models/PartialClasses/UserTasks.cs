@@ -9,8 +9,22 @@ namespace Coloc.Models
     [ModelMetadataType(typeof(UserTasksMetadata))]
     public partial class UserTasks
     {
+        public static string stateToString(int state)
+        {
+            switch (state)
+            {
+                case 0: return "Pas commencé";
+
+                case 1: return "En cours";
+
+                case 2: return "Terminé";
+
+                default: return "Pas commencé";
+            }
+        }
     }
 }
+
 
 public class UserTasksMetadata
 {
@@ -30,5 +44,7 @@ public class UserTasksMetadata
     [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
     public DateTime EndTask { get; set; }
     public DateTime? FinishTask { get; set; }
+
+    [Range(0, 2)]
     public byte State { get; set; }
 }

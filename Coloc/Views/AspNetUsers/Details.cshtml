@@ -45,7 +45,7 @@
                     @Html.DisplayFor(modelItem => task.EndTask)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => task.State)
+                    @UserTasks.stateToString(task.State)
                 </td>
                 <td>
                     <a asp-controller="UserTasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |

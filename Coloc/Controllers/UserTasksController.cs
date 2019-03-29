@@ -84,8 +84,6 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
-            ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
-
             //  Change the task of a user. List in a format: Todo - Task
             ViewData["TaskId"] = from u in _context.Tasks.OrderBy(r => r.Title).OrderBy(r => r.Todo)
                                   select new SelectListItem
@@ -94,8 +92,15 @@ namespace Coloc.Controllers
                                       Text = u.Todo.Title + " - " + u.Title
                                   };
 
+            // Show the userName instead of ID for better comprehension, in usertask edit
+            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userTasks.User);
 
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userTasks.UserId);
+            ViewData["State"] = from s in _context.UserTasks.OrderBy(r => r.State).Select(r => r.State).Distinct().ToList()
+                                select new SelectListItem
+                                {
+                                    Value = s.ToString(),
+                                    Text = s.ToString()
+                                };
             return View(userTasks);
         }
 
@@ -133,6 +138,7 @@ namespace Coloc.Controllers
             }
             ViewData["TaskId"] = new SelectList(_context.Tasks, "Id", "Description", userTasks.TaskId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userTasks.UserId);
+            ViewData["State"] = new SelectList(_context.UserTasks, "Id", "State", userTasks.State);
             return View(userTasks);
         }
 

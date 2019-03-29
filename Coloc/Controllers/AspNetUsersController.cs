@@ -21,6 +21,7 @@ namespace Coloc.Controllers
         // GET: AspNetUsers
         public async Task<IActionResult> Index()
         {
+           // List users with their role
            return View(await _context.AspNetUsers
                 .Include(r => r.AspNetUserRoles)
                 .ThenInclude(s => s.Role)
@@ -97,7 +98,24 @@ namespace Coloc.Controllers
             var aspNetUsers = await _context.AspNetUsers
                 .Include(r => r.AspNetUserRoles)
                 .ThenInclude(s => s.Role)
+                //.ToListAsync();
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            //  List all roles disponible
+            /*ViewData["Roles"] = from u in _context.AspNetRoles.OrderBy(r => r.Name)
+                                 select new SelectListItem
+                                 {
+                                     Value = u.Id.ToString(),
+                                     Text = u.Name,
+                                 };*/
+            // var aspNetRoles = await _context.AspNetRoles.FirstOrDefaultAsync(m => m.Id == id);
+            var currentRole = _context.AspNetUserRoles.Where(r => r.UserId == id).FirstOrDefault().Role;
+            ViewData["SelectedRole"] = currentRole.Id;
+            ViewData["Roles"] = _context.AspNetRoles;
+            //ViewData["Roles"] = new SelectList(_context.AspNetRoles, "Id", "Name");
+            //ViewData["Roles"] = new SelectList(, "Id", "Name", aspNetRoles.Name);
+            //ViewData["Roles"] = new SelectList(_context.AspNetRoles, "Id", "Name", aspNetRoles.Name);
+
             if (aspNetUsers == null)
             {
                 return NotFound();
@@ -117,10 +135,20 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
+            
+
             if (ModelState.IsValid)
             {
                 try
                 {
+
+                    var newRoleId = Request.Form["Role"];
+                    var currentUsersRoles = _context.AspNetUserRoles.Where(r => r.UserId == aspNetUsers.Id).FirstOrDefault();
+
+                    var newRole = new AspNetUserRoles { RoleId = newRoleId, UserId = id };
+
+                    _context.Remove(currentUsersRoles);
+                    _context.Add(newRole);
                     _context.Update(aspNetUsers);
                     await _context.SaveChangesAsync();
                 }
