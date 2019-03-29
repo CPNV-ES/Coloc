@@ -36,7 +36,6 @@
             <td>
                 @foreach (var role in item.AspNetUserRoles)
                 {
-                    var a = role.Role.Name;
                     @Html.DisplayName(role.Role.Name)
                 }
             </td>
