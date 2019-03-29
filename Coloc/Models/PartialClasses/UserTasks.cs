@@ -43,8 +43,6 @@ public class UserTasksMetadata
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
     public DateTime EndTask { get; set; }
-    public DateTime? FinishTask { get; set; }
-
     [Range(0, 2)]
     public byte State { get; set; }
 }

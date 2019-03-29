@@ -58,7 +58,7 @@ namespace Coloc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TaskId,UserId,BeginTask,EndTask,FinishTask,State")] UserTasks userTasks)
+        public async Task<IActionResult> Create([Bind("Id,TaskId,UserId,BeginTask,EndTask,State")] UserTasks userTasks)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace Coloc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskId,UserId,BeginTask,EndTask,FinishTask,State")] UserTasks userTasks)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskId,UserId,BeginTask,EndTask,State")] UserTasks userTasks)
         {
             if (id != userTasks.Id)
             {

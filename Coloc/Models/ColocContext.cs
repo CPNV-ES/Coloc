@@ -159,8 +159,6 @@ namespace Coloc.Models
 
                 entity.Property(e => e.EndTask).HasColumnType("datetime");
 
-                entity.Property(e => e.FinishTask).HasColumnType("datetime");
-
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
