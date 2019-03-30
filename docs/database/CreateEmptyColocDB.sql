@@ -200,6 +200,20 @@ CREATE TABLE [dbo].[UserTasks](
 ) ON [PRIMARY]
 GO
 
+/* TRIGGER
+Add default role 'User' when a new user is created 
+*/
+CREATE TRIGGER DefaultRole ON AspNetUsers
+FOR INSERT 
+AS
+declare @userId nvarchar(450)
+declare @roleId nvarchar(450)
+SELECT @userId = Id from inserted
+SELECT @roleId = Id FROM AspNetRoles WHERE Name = 'User' 
+INSERT INTO AspNetUserRoles(UserId, RoleId) 
+VALUES(@userId, @roleId)
+
+
 /*** CONSTRAINT ***/
 ALTER TABLE [dbo].[UserTasks] ADD  DEFAULT (NULL) FOR [FinishTask]
 GO
