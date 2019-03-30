@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace Coloc.Controllers
 {
@@ -134,11 +135,19 @@ namespace Coloc.Controllers
                         throw;
                     }
                 }
+
+                // Redirect the user to the details vue of the user
+                if (id == userTasks.Id)
+                {
+                    return RedirectToAction("Details", new RouteValueDictionary(
+                        new { controller = "AspNetUsers", action = "Details", Id = userTasks.UserId }));
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TaskId"] = new SelectList(_context.Tasks, "Id", "Description", userTasks.TaskId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userTasks.UserId);
             ViewData["State"] = new SelectList(_context.UserTasks, "Id", "State", userTasks.State);
+
             return View(userTasks);
         }
 
