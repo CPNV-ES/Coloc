@@ -6,25 +6,13 @@
 
 
 <div>
-    <h2>Todo</h2>
+    <h2>@Html.DisplayFor(model => model.Title) - Liste des tâches</h2>
     <div class="col-md-12 text-right"><a asp-action="Index">Liste des Todos</a></div>
     <hr />
-    <dl class="dl-horizontal">
-        <!-- <dt>
-             @Html.DisplayNameFor(model => model.Title)
-         </dt>-->
-        <h3>
-
-            @Html.DisplayFor(model => model.Title)
-        </h3>
-        <!-- <dt>
-             @Html.DisplayNameFor(model => model.Description)
-         </dt> -->
-        <h3>
-
-            @Html.DisplayFor(model => model.Description)
-        </h3>
-    </dl>
+    <h4>
+        @Html.DisplayFor(model => model.Description)
+    </h4>
+ 
 </div>
 
 
@@ -53,7 +41,7 @@
                 </td>
                 <td>
                     <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.Id">Modifier</a> |
-                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |
+                    @*<a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id">Détails</a> |*@
                     <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id">Supprimer</a>
                 </td>
             </tr>
