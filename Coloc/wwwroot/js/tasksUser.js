@@ -8,12 +8,13 @@
         console.log("task: " + $("#task-user-add #taskId").val())
         console.log("begin Date: " + $("#task-user-add #beginDate").val())
         console.log("end Date: " + $("#endDate").val())
-        console.log("state: " + $("#task-user-add #state").val())
+        //console.log("state: " + $("#task-user-add #state").val())
         var userId = $("#userId").val()
         var taskId = $("#taskId").val()
         var beginDate = $("#beginDate").val()
         var endDate = $("#endDate").val()
-        var state = $("#state").val()
+        //var state = $("#state").val()
+        var state = 0 // Quand on ajoute une tâche, elle n'est pas commencée par défaut
         //send data to api to store new vaucher
         console.log('a')
         add(taskId, userId, beginDate, endDate, state)
@@ -61,7 +62,7 @@ function getTask(data) {
             console.log(dataCallBack);
             $("#show-usertasks-todo").append(
                 "<tr> \
-                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td>" + data.state + "</td><td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/Tasks/Delete/ " + data.id + ">Supprimer</a></td></tr>"
+                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td>Pas commencé</td><td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/UserTasks/Delete/" + data.id + ">Supprimer</a></td></tr>"
             );
         })
         .fail(function () {

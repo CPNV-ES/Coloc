@@ -47,7 +47,7 @@ namespace Coloc.Controllers
         // GET: Tasks/Create
         public IActionResult Create()
         {
-            ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Description");
+            ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Title");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace Coloc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Description", tasks.TodoId);
+            ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Title", tasks.TodoId);
             return View(tasks);
         }
 
@@ -81,7 +81,7 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
-            ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Description", tasks.TodoId);
+            ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Title", tasks.TodoId);
             return View(tasks);
         }
 
