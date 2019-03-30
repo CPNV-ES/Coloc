@@ -5,15 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Modifier</h2>
+<h2>Modifier le rôle</h2>
 
-@foreach (var role in Model.AspNetUserRoles)
-{
-    var abc = role.Role.Name;
-    @Html.DisplayName(role.Role.Name)
-}
 
-<h4>@Html.DisplayFor(model => model.UserName)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,49 +15,49 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <!--<label asp-for="UserName" class="control-label"></label>-->
+                <input type="hidden" asp-for="UserName" class="form-control" />
+                <!--<span asp-validation-for="UserName" class="text-danger"></span>-->
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <!-- <label asp-for="Email" class="control-label"></label>-->
+                <input type="hidden" asp-for="Email" class="form-control" />
+                <!--<span asp-validation-for="Email" class="text-danger"></span>-->
             </div>
 
-            <div class="form-group">
-                <label class="control-label">Roles</label>
-                <select id="role" name="role" class="form-control">
-                    @foreach (AspNetRoles role in ViewBag.Roles)
-                    {
-                        if (ViewBag.SelectedRole == role.Id)
+                <div class="form-group">
+                    <label class="control-label">Roles</label>
+                    <select id="role" name="role" class="form-control">
+                        @foreach (AspNetRoles role in ViewBag.Roles)
                         {
-                            <option value="@role.Id" selected>@role.Name</option>
+                            if (ViewBag.SelectedRole == role.Id)
+                            {
+                                <option value="@role.Id" selected>@role.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@role.Id">@role.Name</option>
+                            }
                         }
-                        else
-                        {
-                            <option value="@role.Id">@role.Name</option>
-                        }
-                    }
-                </select>
+                    </select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <select asp-for="Id" class="form-control" asp-items="ViewBag.Roles"></select>
                 <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <select asp-for="Id" class="form-control" asp-items="ViewBag.Roles"></select>
-            <span asp-validation-for="Id" class="text-danger"></span>
-        </div>*@
-            <div class="form-group">
-                <input type="submit" value="Sauvegarder" class="btn btn-default" />
-            </div>
-        </form>
+            </div>*@
+                <div class="form-group">
+                    <input type="submit" value="Sauvegarder" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Retour à la liste</a>
-</div>
+    <div>
+        <a asp-action="Index">Retour à la liste</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

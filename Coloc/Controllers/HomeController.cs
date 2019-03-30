@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Coloc.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Coloc.Controllers
 {
