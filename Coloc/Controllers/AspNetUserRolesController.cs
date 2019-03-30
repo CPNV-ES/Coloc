@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Coloc.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AspNetUserRolesController : Controller
     {
         private readonly ColocContext _context;
