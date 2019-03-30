@@ -30,8 +30,10 @@
             </th>
         </tr>
     </thead>
+
+    @*Show users task. Order by end date*@
     <tbody id="show-usertasks-todo">
-        @foreach (var task in Model.Item1.UserTasks)
+        @foreach (var task in Model.Item1.UserTasks.OrderBy(t => t.EndTask))
         {
             <tr>
                 <td>
