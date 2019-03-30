@@ -36,14 +36,15 @@ namespace Coloc.Controllers
         // GET: AspNetUsers/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            var currentRole = User.FindFirstValue(ClaimTypes.Role);
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
             {
                 return NotFound();
             }
 
             // If a user try to access another user detail page, redirect to his own detail page
+            var currentRole = User.FindFirstValue(ClaimTypes.Role);
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             if (currentRole == "User" && currentUserId != id)
             {
                 return RedirectToAction("Details", new RouteValueDictionary(
@@ -92,6 +93,7 @@ namespace Coloc.Controllers
         }
 
         // GET: AspNetUsers/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -100,6 +102,7 @@ namespace Coloc.Controllers
         // POST: AspNetUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] AspNetUsers aspNetUsers)
@@ -113,7 +116,9 @@ namespace Coloc.Controllers
             return View(aspNetUsers);
         }
 
+
         // GET: AspNetUsers/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -128,19 +133,10 @@ namespace Coloc.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             //  List all roles disponible
-            /*ViewData["Roles"] = from u in _context.AspNetRoles.OrderBy(r => r.Name)
-                                 select new SelectListItem
-                                 {
-                                     Value = u.Id.ToString(),
-                                     Text = u.Name,
-                                 };*/
-            // var aspNetRoles = await _context.AspNetRoles.FirstOrDefaultAsync(m => m.Id == id);
+
             var currentRole = _context.AspNetUserRoles.Where(r => r.UserId == id).FirstOrDefault().Role;
             ViewData["SelectedRole"] = currentRole.Id;
             ViewData["Roles"] = _context.AspNetRoles;
-            //ViewData["Roles"] = new SelectList(_context.AspNetRoles, "Id", "Name");
-            //ViewData["Roles"] = new SelectList(, "Id", "Name", aspNetRoles.Name);
-            //ViewData["Roles"] = new SelectList(_context.AspNetRoles, "Id", "Name", aspNetRoles.Name);
 
             if (aspNetUsers == null)
             {
@@ -149,9 +145,12 @@ namespace Coloc.Controllers
             return View(aspNetUsers);
         }
 
+
+        // Update role
         // POST: AspNetUsers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] AspNetUsers aspNetUsers)
@@ -161,7 +160,15 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
-            
+            // Admin can't change his own role
+            var currentRole = User.FindFirstValue(ClaimTypes.Role);
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentRole == "Admin" && currentUserId == id)
+            {
+                return RedirectToAction("Index", new RouteValueDictionary(
+                    new { controller = "AspNetUsers", action = "Index"}));
+            }
 
             if (ModelState.IsValid)
             {
@@ -175,7 +182,6 @@ namespace Coloc.Controllers
 
                     _context.Remove(currentUsersRoles);
                     _context.Add(newRole);
-                    _context.Update(aspNetUsers);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -195,6 +201,7 @@ namespace Coloc.Controllers
         }
 
         // GET: AspNetUsers/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -213,6 +220,7 @@ namespace Coloc.Controllers
         }
 
         // POST: AspNetUsers/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
