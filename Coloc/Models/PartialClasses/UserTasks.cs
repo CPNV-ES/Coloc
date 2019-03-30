@@ -38,7 +38,7 @@ public class UserTasksMetadata
     [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
     public DateTime BeginTask { get; set; }
 
-    [DisplayName("Débute le ")]
+    [DisplayName("Termine le ")]
     [Required(ErrorMessage = "Veuillez enter une date de fin")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
