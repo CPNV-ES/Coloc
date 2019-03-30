@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Coloc.Models.AspNetUsers>
+﻿@using Microsoft.AspNetCore.Identity
+
+@model IEnumerable<Coloc.Models.AspNetUsers>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -6,45 +10,57 @@
 }
 
 <h2>Index</h2>
+@if (SignInManager.IsSignedIn(User)) { 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @foreach (var role in item.AspNetUserRoles)
+                        {
+                            @Html.DisplayName(role.Role.Name)
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Tâches</a>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                Role
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @foreach (var role in item.AspNetUserRoles)
-                {
-                    @Html.DisplayName(role.Role.Name)
-                }
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Tâches</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Modifier Rôle</a>
-                @*| <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
+                        @*An admin can't change his own role !*@
+                        @if (User.IsInRole("Admin") && item.UserName == UserManager.GetUserName(User))
+                        {
+
+                        }
+                        else
+                        {
+                           <a asp-action="Edit" asp-route-id="@item.Id">| Modifier Rôle</a>
+                        }
+                        
+                        @*| <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
