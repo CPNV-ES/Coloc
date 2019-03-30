@@ -64,13 +64,8 @@ namespace Coloc.Controllers
             var userTasks = await _context.UserTasks
                 .FirstOrDefaultAsync(m => m.UserId == id);
 
-            // If the user has no tasks, return an empty view
-            if (userTasks == null)
-            {
-                var tuple2 = new Tuple<AspNetUsers, UserTasks>(aspNetUsers, null);
-                return View(tuple2);
-            }
-            ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
+
+            // ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
 
             //  Change the task of a user. List in a format: Todo - Task
             ViewData["TaskId"] = from u in _context.Tasks.OrderBy(r => r.Title).OrderBy(r => r.Todo)
@@ -79,6 +74,13 @@ namespace Coloc.Controllers
                                      Value = u.Id.ToString(),
                                      Text = u.Todo.Title + " - " + u.Title
                                  };
+            // If the user has no tasks, return an empty view
+            if (userTasks == null)
+            {
+                var tuple2 = new Tuple<AspNetUsers, UserTasks>(aspNetUsers, null);
+                return View(tuple2);
+            }
+
             var tuple = new Tuple<AspNetUsers, UserTasks>(aspNetUsers, null);
             return View(tuple);
         }
