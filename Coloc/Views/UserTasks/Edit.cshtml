@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Modifier tâche d'une personne</h2>
 
-<h4>UserTasks</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -37,7 +36,12 @@
             <div class="form-group">
 
                 <label asp-for="State" class="control-label"></label>
-                <select asp-for="State" class="form-control" asp-items="ViewBag.State"></select>
+                <select asp-for="State" class="form-control">
+                    <option value=0>Pas commencé</option>
+                    <option value=1>En cours</option>
+                    <option value=2>Terminé</option>
+                </select>
+                @*<select asp-for="State" class="form-control" asp-items="ViewBag.State"></select>*@
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,9 +52,9 @@
 </div>
 
 <div>
-    <a asp-controller="AspNetUsers" asp-action="Index">Retour à la liste</a>
+    <a asp-controller="AspNetUsers" asp-action="Details" asp-route-id="@Model.UserId">Retour à la liste</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-                    }
+}
