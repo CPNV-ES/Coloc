@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Coloc.Controllers
 {
@@ -19,6 +23,7 @@ namespace Coloc.Controllers
         }
 
         // GET: AspNetUsers
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
            // List users with their role
@@ -31,12 +36,21 @@ namespace Coloc.Controllers
         // GET: AspNetUsers/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            var currentRole = User.FindFirstValue(ClaimTypes.Role);
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (id == null)
             {
                 return NotFound();
             }
-            string userId = id;
 
+            // If a user try to access another user detail page, redirect to his own detail page
+            if (currentRole == "User" && currentUserId != id)
+            {
+                return RedirectToAction("Details", new RouteValueDictionary(
+                    new { controller = "AspNetUsers", action = "Details", Id = currentUserId }));
+            }
+
+            string userId = id;
             // Can remove aspNetUsers2
             var aspNetUsers = await _context.AspNetUsers
                 .Include(r => r.UserTasks)
@@ -48,9 +62,12 @@ namespace Coloc.Controllers
             }
             var userTasks = await _context.UserTasks
                 .FirstOrDefaultAsync(m => m.UserId == id);
+
+            // If the user has no tasks, return an empty view
             if (userTasks == null)
             {
-                return NotFound();
+                var tuple2 = new Tuple<AspNetUsers, UserTasks>(aspNetUsers, null);
+                return View(tuple2);
             }
             ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
 
@@ -63,6 +80,15 @@ namespace Coloc.Controllers
                                  };
             var tuple = new Tuple<AspNetUsers, UserTasks>(aspNetUsers, null);
             return View(tuple);
+        }
+
+        // Method to get our personnal tasks
+        public IActionResult MyTasks()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get current user logged in
+            return RedirectToAction("Details", new RouteValueDictionary(
+                new { controller = "AspNetUsers", action = "Details", Id = userId }));
+
         }
 
         // GET: AspNetUsers/Create
