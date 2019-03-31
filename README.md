@@ -1,5 +1,6 @@
 # Coloc
-ASP.net project managing the maintenance schedule of equipments
+> Coloc is an ASP.net school project managing tasks in a flatsharing.
+
 ![Coloc](docs/assets/ColocExample.png)
 ## Requirements
 - Microsoft Sql Server 
@@ -35,7 +36,7 @@ Once in the project, don't forget to scaffold the models with this command (use 
 
 ## Utilisation
 ## Utilisation
-There is a login system. Here are the credentials and informations on each user :  
+There is a login system in the application. Here are the credentials and informations on each user :  
 
 | Identifiant  | Mot de passe   | Rôle  |
 |---|---|---|
