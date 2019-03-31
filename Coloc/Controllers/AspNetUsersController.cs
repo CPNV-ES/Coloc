@@ -50,7 +50,7 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
-            // If a user try to access another user detail page, redirect to his own detail page
+            // Protection : If a user try to access another user detail page, redirect to his own detail page
             var currentRole = User.FindFirstValue(ClaimTypes.Role);
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -72,7 +72,6 @@ namespace Coloc.Controllers
             }
             var userTasks = await _context.UserTasks
                 .FirstOrDefaultAsync(m => m.UserId == id);
-
 
             // ViewData["TaskId"] = new SelectList(_context.Tasks.OrderBy(r => r.Todo), "Id", "Description", userTasks.TaskId);
 
