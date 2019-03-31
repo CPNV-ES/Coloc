@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Coloc.Models
 {
@@ -23,8 +24,13 @@ namespace Coloc.Models
 public class TasksMetadata
 {
     [DisplayName("Titre")]
+    [Required(ErrorMessage = "Veuillez insérer un titre de tâche.")]
+    [StringLength(50, MinimumLength = 1, ErrorMessage = "Maximum 50 lettres autorisées.")]
     public string Title { get; set; }
+
     [DisplayName("Description")]
+    [Required(ErrorMessage = "Veuillez insérer une description.")]
+    [StringLength(500, MinimumLength = 5, ErrorMessage = "La description doit comporter plus de 5 lettres (Max: 500).")]
     public string Description { get; set; }
 
 }
