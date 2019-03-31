@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Description : User Tasks Controller.
+ * Handles lots of view redirection and ViewData
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,7 +50,7 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["Task"] = _context.Tasks.Where(r => r.Id == userTasks.TaskId);
             return View(userTasks);
         }
 
@@ -92,6 +100,7 @@ namespace Coloc.Controllers
                                       Value = u.Id.ToString(),
                                       Text = u.Todo.Title + " - " + u.Title
                                   };
+           ViewData["Task"] = _context.Tasks.Where(r => r.Id == userTasks.TaskId).FirstOrDefault();
 
             // Show the userName instead of ID for better comprehension, in usertask edit
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "UserName", userTasks.User);
@@ -102,6 +111,7 @@ namespace Coloc.Controllers
                                     Value = s.ToString(),
                                     Text = s.ToString()
                                 };
+
             return View(userTasks);
         }
 
@@ -144,6 +154,9 @@ namespace Coloc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+
+            // Add to the view usefull data informations
             ViewData["TaskId"] = new SelectList(_context.Tasks, "Id", "Description", userTasks.TaskId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userTasks.UserId);
             ViewData["State"] = new SelectList(_context.UserTasks, "Id", "State", userTasks.State);
@@ -181,7 +194,9 @@ namespace Coloc.Controllers
             await _context.SaveChangesAsync();
 
             // Return to the list of users view
-            return RedirectToAction("Index", "AspNetUsers");
+            //return RedirectToAction("Index", "AspNetUsers");
+            return RedirectToAction("Details", new RouteValueDictionary(
+                new { controller = "AspNetUsers", action = "Details", Id = userTasks.UserId }));
         }
 
         private bool UserTasksExists(int id)
