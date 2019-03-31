@@ -49,7 +49,7 @@ public class UserTasksMetadata
 
     // Vérification date fin
     [DisplayName("Termine le ")]
-    [Required(ErrorMessage = "Veuillez enter une date de fin")]
+    [Required(ErrorMessage = "Veuillez enter une date de fin.")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime EndTask { get; set; }

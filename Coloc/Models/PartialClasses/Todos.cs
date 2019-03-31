@@ -29,7 +29,7 @@ public class TodosMetadata
 
     [Required(ErrorMessage = "Veuillez insérer une description.")]
     [DisplayName("Description")]
-    [StringLength(500, MinimumLength = 10, ErrorMessage = "La description doit comporter entre 10 à 500 lettres.")]
+    [StringLength(500, MinimumLength = 5, ErrorMessage = "La description doit comporter plus de 5 lettres (Max: 500).")]
     public string Description { get; set; }
 
 }
