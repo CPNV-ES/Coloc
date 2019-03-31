@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Coloc.Models
 {
@@ -21,9 +22,14 @@ namespace Coloc.Models
 
 public class TodosMetadata
 {
+    [Required(ErrorMessage = "Veuillez insérer un titre.")]
     [DisplayName("Titre")]
+    [StringLength(50, MinimumLength=1, ErrorMessage = "Maximum 50 lettres autorisées.")]
     public string Title { get; set; }
+
+    [Required(ErrorMessage = "Veuillez insérer une description.")]
     [DisplayName("Description")]
+    [StringLength(500, MinimumLength = 10, ErrorMessage = "La description doit comporter entre 10 à 500 lettres.")]
     public string Description { get; set; }
 
 }

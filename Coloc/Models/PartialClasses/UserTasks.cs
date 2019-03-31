@@ -37,20 +37,31 @@ namespace Coloc.Models
 public class UserTasksMetadata
 {
     public int Id { get; set; }
-    public int TaskId { get; set; }
+
     public string UserId { get; set; }
 
+    // Verification date debut
     [DisplayName("Débute le ")]
     [Required(ErrorMessage = "Veuillez entrer une date de début.")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime BeginTask { get; set; }
 
+    // Vérification date fin
     [DisplayName("Termine le ")]
     [Required(ErrorMessage = "Veuillez enter une date de fin")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime EndTask { get; set; }
+
+    [Required]
+    [DisplayName("Tâche")]
+    public int TaskId { get; set; }
+
+    [Required]
     [Range(0, 2)]
+    [DisplayName("Avancement")]
     public byte State { get; set; }
+
+
 }
