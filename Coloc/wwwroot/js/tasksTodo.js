@@ -29,7 +29,7 @@ function add(title, description, todoId){
             console.log(data);
             $("#show-task-todo").append(
                 "<tr> \
-                    <td> "+ title + "</td ><td>" + description + "<td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/Tasks/Details/" + data.id +">Détails</a> | <a href=/Tasks/Delete/ " + data.id + ">Supprimer</a></td>\
+                    <td> "+ title + "</td ><td>" + description + "<td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/Tasks/Delete/" +  data.id + ">Supprimer</a></td>\
                 </tr > "
             );
 
