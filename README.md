@@ -35,7 +35,6 @@ Once in the project, don't forget to scaffold the models with this command (use 
 - `Scaffold-DbContext "Server=localhost;Database=Coloc;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models`
 
 ## Utilisation
-## Utilisation
 There is a login system in the application. Here are the credentials and informations on each user :  
 
 | Identifiant  | Mot de passe   | Rôle  |
