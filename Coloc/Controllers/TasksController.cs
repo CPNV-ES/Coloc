@@ -1,3 +1,10 @@
+/*
+ * Description : Handle the creation and deleption of user or admin Tasks.
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace Coloc.Controllers
 {
@@ -148,7 +156,11 @@ namespace Coloc.Controllers
             var tasks = await _context.Tasks.FindAsync(id);
             _context.Tasks.Remove(tasks);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));$
+
+            // Redirect to the list of todo details
+            return RedirectToAction("Details", new RouteValueDictionary(
+                    new { controller = "Todos", action = "Details", Id = tasks.TodoId }));
         }
 
         private bool TasksExists(int id)
