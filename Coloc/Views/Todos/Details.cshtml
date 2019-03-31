@@ -4,18 +4,15 @@
     ViewData["Title"] = "Details";
 }
 
-
 <div>
-    <h2>@Html.DisplayFor(model => model.Title) - Liste des tâches</h2>
-    <div class="col-md-12 text-right"><a asp-action="Index">Liste des Todos</a></div>
+    <h2>Liste des tâches - @Html.DisplayFor(model => model.Title)</h2>
+
     <hr />
     <h4>
         @Html.DisplayFor(model => model.Description)
     </h4>
  
 </div>
-
-
 
 <table class="table">
     <thead>
@@ -53,9 +50,10 @@
 
 <div class="row">
     <div class="d-flex align-items-center justify-content-between col-sm-12">
-       <!-- <div>
-            <h2>Ajouter tâche</h2>
-        </div> -->
+        <!-- <div>
+        <h2>Ajouter tâche</h2>
+    </div> -->
+        <a asp-action="Index" style="float:right;" class="btn btn-warning">Retour aux Todos</a>
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-task-todo" aria-expanded="false" aria-controls="collapseExample">
             Ajouter une tâche
         </button>
@@ -83,7 +81,7 @@
             </form>
             <div class="row">
                 <div class="form-group col-sm-12 d-flex justify-content-end align-items-end m-0">
-                    <button id="add-task-todo-button" class="btn btn-warning " type="button" >Ajouter</button>
+                    <button id="add-task-todo-button" class="btn btn-success " type="button" >Ajouter</button>
                 </div>
             </div>
         </div>

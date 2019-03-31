@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-<div class="col-md-12 text-right"><a asp-action="Index">Liste des tâches</a></div>
+<h2>Modifier</h2>
+
 <h4>Tasks</h4>
 <hr />
-<div class="row">
+<div style="position: relative;" class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -30,10 +30,11 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Sauvegarder" class="btn btn-success" />
             </div>
         </form>
     </div>
+    <a asp-controller="Todos" asp-action="Details" asp-route-id="@Model.TodoId" style="position: absolute; bottom: 15px; right:15px;" class="btn btn-warning">Retour aux Todos</a>
 </div>
 
 @section Scripts {

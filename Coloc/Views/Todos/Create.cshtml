@@ -5,10 +5,9 @@
 }
 
 <h2>Créer</h2>
-<div class="col-md-12 text-right"><a asp-action="Index">Liste des Todos</a></div>
 <h4>Todos</h4>
 <hr />
-<div class="row">
+<div class="row" style="position:relative">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -23,11 +22,13 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Créer" class="btn btn-success" />
             </div>
         </form>
     </div>
+    <a asp-action="Index" style="position:absolute; bottom:15px; right:15px;" class="btn btn-warning">Retour aux Todos</a>
 </div>
+
 
 
 @section Scripts {
