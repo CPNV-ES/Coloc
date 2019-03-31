@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+ * Description : Startup Files
+ * Modification added to the default settings:
+ *  - .AddRoles<IdentityRole>()                        // Handle Role authorisation from view and more
+ *  - services.AddMvc(config =>..                      // Add view login and authorization on the full application
+ *  - services.Configure<IdentityOptions>(options =>.. // Add Configurable Identity Settings (password, locked out, expiration)
+ *  - services.AddScoped..                             //Add role claims to the user object (https://github.com/aspnet/Identity/issues/1813#issuecomment-420066501)
+ *  - services.ConfigureApplicationCookie(options =>.. // setting the Account Login page  
+ *  
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -87,7 +100,7 @@ namespace Coloc
                 options.User.RequireUniqueEmail = true;
             });
 
-            //Seting the Account Login page  
+            // Setting the Account Login page  
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings  
