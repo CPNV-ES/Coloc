@@ -11,7 +11,7 @@
     <h4>
         @Html.DisplayFor(model => model.Description)
     </h4>
- 
+
 </div>
 
 <table class="table">
@@ -29,7 +29,7 @@
     <tbody id="show-task-todo">
         @foreach (var task in Model.Tasks)
         {
-            <tr >
+            <tr>
                 <td>
                     @Html.DisplayFor(modelItem => task.Title)
                 </td>
@@ -48,11 +48,9 @@
 </table>
 
 
+@*Bouton ajouter une tâche*@
 <div class="row">
     <div class="d-flex align-items-center justify-content-between col-sm-12">
-        <!-- <div>
-        <h2>Ajouter tâche</h2>
-    </div> -->
         <a asp-action="Index" style="float:right;" class="btn btn-warning">Retour aux Todos</a>
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-task-todo" aria-expanded="false" aria-controls="collapseExample">
             Ajouter une tâche
@@ -63,29 +61,33 @@
 <!-- Add jquery/ajax button to create a new task directly assigned to the todo -->
 <div class="row">
     <div class="collapse col-sm-12 mt-3" id="add-task-todo">
-        <div class="card card-body" id="purchase-new">
+        <div class="card card-body" id="task-new">
             <form id="task-todo-add">
-                <input id="todoId" name="todoId" value="@Model.Id" class="hidden"  />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Id" id="todoId" name="todoId" value="@Model.Id" class="hidden" />
+           
                 <div class="row">
                     <div class="form-group col-sm-2">
-                        <label for="title">Titre</label>
-                        <input type="text" id="title" name="title" value="" class="form-control is-invalid" />
-                        <span id="error-title" class="invalid-feedback p-1">Pas de titre</span>
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" id="title" class="form-control" value="" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="form-group col-sm-10">
-                        <label for="description">Description</label>
-                        <input type="text" id="description" name="description" value="" class="form-control is-invalid" />
-                        <span id="error-description" class="invalid-feedback p-1">Pas de description</span>
+                        <label asp-for="Description"></label>
+                        <input asp-for="Description" id="description" value="" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>
-            </form>
-            <div class="row">
                 <div class="form-group col-sm-12 d-flex justify-content-end align-items-end m-0">
-                    <button id="add-task-todo-button" class="btn btn-success " type="button" >Ajouter</button>
+                    <button id="add-task-todo-button" class="btn btn-success disabled" disabled type="button">Ajouter</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
-<script src="~/js/tasksTodo.js" asp-append-version="true"></script>
+<environment include="Development">
+    <script src="~/js/tasksTodo.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+</environment>

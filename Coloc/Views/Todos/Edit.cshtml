@@ -10,7 +10,7 @@
 <hr />
 <div style="position:relative" class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="todo-edit-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -24,7 +24,7 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Sauvegarder" class="btn btn-success" />
+                <input id="todo-edit-submit" type="submit" value="Sauvegarder" class="btn btn-success" />
             </div>
 
         </form>
@@ -36,3 +36,9 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<environment include="Development">
+    <script src="~/js/tasksTodo.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+</environment>
