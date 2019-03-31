@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Description : Controller to handle Todo
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

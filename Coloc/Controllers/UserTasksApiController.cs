@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Description : Api Controller to work with tasksUser.js. 
+ * Handle CRUD of UserTasks via Ajax form.
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,7 +100,7 @@ namespace Coloc.Controllers
 
             _context.UserTasks.Add(userTasks);
             await _context.SaveChangesAsync();
-
+            
             return CreatedAtAction("GetUserTasks", new { id = userTasks.Id }, userTasks);
         }
 

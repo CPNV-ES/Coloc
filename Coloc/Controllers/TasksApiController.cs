@@ -1,4 +1,12 @@
-﻿using System;
+﻿
+/*
+ * Description : API controller to create new Tasks via Ajax form.
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

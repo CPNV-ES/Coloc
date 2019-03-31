@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * Description : User Controller. The main controller of the application.
+ * It handles lot of redirection to a previous page, handle authorization create lot of ViewData content.
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
