@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Coloc.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserTasksApiController : ControllerBase
