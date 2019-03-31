@@ -9,7 +9,7 @@
 
 
 <hr />
-<div class="row">
+<div class="row" style="position:relative;">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,39 +25,40 @@
                 <!--<span asp-validation-for="Email" class="text-danger"></span>-->
             </div>
 
-                <div class="form-group">
-                    <label class="control-label">Roles</label>
-                    <select id="role" name="role" class="form-control">
-                        @foreach (AspNetRoles role in ViewBag.Roles)
+            <div class="form-group">
+                <label class="control-label">Roles</label>
+                <select id="role" name="role" class="form-control">
+                    @foreach (AspNetRoles role in ViewBag.Roles)
+                    {
+                        if (ViewBag.SelectedRole == role.Id)
                         {
-                            if (ViewBag.SelectedRole == role.Id)
-                            {
-                                <option value="@role.Id" selected>@role.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@role.Id">@role.Name</option>
-                            }
+                            <option value="@role.Id" selected>@role.Name</option>
                         }
-                    </select>
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>
-                @*<div class="form-group">
+                        else
+                        {
+                            <option value="@role.Id">@role.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
                 <select asp-for="Id" class="form-control" asp-items="ViewBag.Roles"></select>
                 <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-                <div class="form-group">
-                    <input type="submit" value="Sauvegarder" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
+                </div>*@
+            <div class="form-group">
+                <input class="btn btn-success" type="submit" value="Sauvegarder" class="btn btn-default" />
+            </div>
+        </form>
     </div>
-
-    <div>
-        <a asp-action="Index">Retour à la liste</a>
-    </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Index" style="position:absolute; bottom:15px; right:15px;" class="btn btn-warning">Retour aux Utilisateurs</a>
     }
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
