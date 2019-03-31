@@ -1,41 +1,34 @@
 ﻿@model Coloc.Models.UserTasks
-
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Modifier tâche d'une personne</h2>
+<h2>Etat d'avancement</h2>
 
 <hr />
-<div class="row">
+
+<div style="position:relative" class="row">
     <div class="col-md-4">
+
+        <h5><b>Titre : </b>@Model.Task.Title</h5>
+        <h5><b>Description :</b> @Model.Task.Description</h5>
+        <h5><b>Début de la tâche : </b>@Model.BeginTask.ToShortDateString()</h5>
+        <h5><b>Fin de la tâche : </b>@Model.EndTask.ToShortDateString()</h5>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group" >
-                <label  asp-for="TaskId" class="control-label"></label>
-                <select  asp-for="TaskId" class="form-control" asp-items="ViewBag.TaskId"></select>
-                <span asp-validation-for="TaskId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="TaskId" />
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BeginTask" class="control-label"></label>
-                <input asp-for="BeginTask" class="form-control" />
+                <input type="hidden" asp-for="BeginTask" class="form-control" />
                 <span asp-validation-for="BeginTask" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTask" class="control-label"></label>
-                <input asp-for="EndTask" class="form-control" />
+                <input type="hidden" asp-for="EndTask" class="form-control" />
                 <span asp-validation-for="EndTask" class="text-danger"></span>
             </div>
             <div class="form-group">
-
-                <label asp-for="State" class="control-label"></label>
                 <select asp-for="State" class="form-control">
                     <option value=0>Pas commencé</option>
                     <option value=1>En cours</option>
@@ -45,15 +38,13 @@
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Sauvegarder" class="btn btn-default" />
+                <input class="btn btn-success" type="submit" value="Sauvegarder" />
             </div>
         </form>
     </div>
+    <a asp-controller="AspNetUsers" asp-action="Details" asp-route-id="@Model.UserId" style="position:absolute; bottom:15px; right:15px;" class="btn btn-warning">Retour aux tâches</a>
 </div>
 
-<div>
-    <a asp-controller="AspNetUsers" asp-action="Details" asp-route-id="@Model.UserId">Retour à la liste</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
