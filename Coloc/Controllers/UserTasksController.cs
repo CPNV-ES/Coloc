@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Diagnostics;
 
 namespace Coloc.Controllers
 {
@@ -26,7 +29,7 @@ namespace Coloc.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: UserTasks
         public async Task<IActionResult> Index()
         {
@@ -34,6 +37,7 @@ namespace Coloc.Controllers
             return View(await colocContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: UserTasks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -54,6 +58,7 @@ namespace Coloc.Controllers
             return View(userTasks);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: UserTasks/Create
         public IActionResult Create()
         {
@@ -62,6 +67,7 @@ namespace Coloc.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: UserTasks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -93,6 +99,20 @@ namespace Coloc.Controllers
             {
                 return NotFound();
             }
+
+            // Protection : If a user try to access another usertask page, redirect to the homepage
+            var currentRole = User.FindFirstValue(ClaimTypes.Role);
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentRole == "User")
+            {
+                if (userTasks.UserId != currentUserId)
+                {
+                    return RedirectToAction("Index", new RouteValueDictionary(
+                        new { controller = "Home", action = "Index", Id = userTasks.UserId }));
+                }
+            }
+
             //  Change the task of a user. List in a format: Todo - Task
             ViewData["TaskId"] = from u in _context.Tasks.OrderBy(r => r.Title).OrderBy(r => r.Todo)
                                   select new SelectListItem
@@ -127,6 +147,20 @@ namespace Coloc.Controllers
                 return NotFound();
             }
 
+            // Protection : If a user try to access another usertask page, redirect to the homepage
+            var currentRole = User.FindFirstValue(ClaimTypes.Role);
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentRole == "User")
+            {
+                if (userTasks.UserId != currentUserId)
+                {
+                    return RedirectToAction("Index", new RouteValueDictionary(
+                        new { controller = "Home", action = "Index", Id = userTasks.UserId }));
+                }
+
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -155,7 +189,6 @@ namespace Coloc.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-
             // Add to the view usefull data informations
             ViewData["TaskId"] = new SelectList(_context.Tasks, "Id", "Description", userTasks.TaskId);
             ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", userTasks.UserId);
@@ -164,6 +197,7 @@ namespace Coloc.Controllers
             return View(userTasks);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: UserTasks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -185,6 +219,7 @@ namespace Coloc.Controllers
         }
 
         // POST: UserTasks/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
