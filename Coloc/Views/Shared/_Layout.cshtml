@@ -39,14 +39,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
+                    @* Different menu between Admin and User*@
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @if(User.IsInRole("Admin"))
+                        @if (User.IsInRole("Admin"))
                         {
                             <li><a asp-area="" asp-controller="Todos" asp-action="Index">Todos</a></li>
+                            <li><a asp-area="" asp-controller="AspNetUsers" asp-action="Index">Utilisateurs</a></li>
                         }
                         @*<li><a asp-area="" asp-controller="UserTasks" asp-action="Index">Tâches des utilisateurs</a></li>*@
-                        <li><a asp-area="" asp-controller="AspNetUsers" asp-action="Index">Utilisateurs</a></li>
+
                         <li><a asp-area="" asp-controller="AspNetUsers" asp-action="MyTasks">Mes tâches</a></li>
                     }
                 </ul>
