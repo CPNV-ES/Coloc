@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coloc.Models;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Coloc.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TasksController : Controller
     {
         private readonly ColocContext _context;
@@ -90,6 +92,7 @@ namespace Coloc.Controllers
                 return NotFound();
             }
             ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Title", tasks.TodoId);
+
             return View(tasks);
         }
 
@@ -123,9 +126,12 @@ namespace Coloc.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new RouteValueDictionary(
+                    new { controller = "Todos", action = "Details", Id = tasks.TodoId }));
             }
             ViewData["TodoId"] = new SelectList(_context.Todos, "Id", "Description", tasks.TodoId);
+
+
             return View(tasks);
         }
 
