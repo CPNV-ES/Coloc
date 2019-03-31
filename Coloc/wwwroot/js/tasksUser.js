@@ -12,16 +12,43 @@ $(document).ready(function () {
         //get input data
         var userId = $("#userId").val()
         var taskId = $("#taskId").val()
+        console.log(taskId)
         var beginDate = $("#beginDate").val()
         var endDate = $("#endDate").val()
         var state = 0 // We set the state of a task to 0 per default.
 
-        add(taskId, userId, beginDate, endDate, state, role)
+        add(taskId, userId, beginDate, endDate, state)
     });
+
+    // On form add task to a user (/AspNetUsers/Details/idUser)
+    $("#task-user-add").on("change paste keyup click", function () {
+        var dateBegin = $("#beginDate").val()
+        var dateEnd = $("#endDate").val()
+
+        // Check if the end date is greater than the begin date
+        if (new Date(dateEnd).getTime() < new Date(dateBegin).getTime()) {
+            $("#add-task-user-button").attr("disabled")
+            $("#add-task-user-button").addClass("disabled")
+            $("#errorMessage").text("La date de début doit être inférieure ou égale à la date de fin.")
+        }
+        else {
+            $("#errorMessage").text("")
+            // Activate/desactive submit button if form is valid or not
+            if ($(this).valid()) {
+                $("#add-task-user-button").removeAttr("disabled").removeClass("disabled")
+            }
+            else {
+                $("#add-task-user-button").attr("disabled")
+                $("#add-task-user-button").addClass("disabled")
+            }
+        }
+    });
+
+  
 });
 
 // Add a new user task
-function add(taskId, userId, beginDate, endDate, state, role){
+function add(taskId, userId, beginDate, endDate, state){
     $.ajax({
         accepts: "application/json",
         contentType: "application/json",
@@ -33,7 +60,7 @@ function add(taskId, userId, beginDate, endDate, state, role){
             getTask(data);
         })
         .fail(function () {
-            alert("La tâche n'a pas été ajoutée");
+            alert("La tâche n'a pas été ajoutée. merci de contacter le support.");
         });
 };
 
@@ -41,7 +68,7 @@ function update() {
  // CHECKHERE
 }
 
-// Return tasks data so we can comeback to the last page
+// Return tasks data so we have the information on the new task added
 function getTask(data) {
     data.beginTask = formatDate(data.beginTask)
     data.endTask = formatDate(data.endTask)
@@ -55,7 +82,7 @@ function getTask(data) {
         .done(function (dataCallBack) {
             $("#show-usertasks-todo").append(
                 "<tr> \
-                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td><a class='btn beginButton' href==/Tasks/Edit/" + data.id+"</a>Pas commencé</td><td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/UserTasks/Delete/" + data.id + ">Supprimer</a></td></tr>"
+                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td><a href=/UserTasks/Edit/" + data.id +"  class='btn stateButton beginButton'>Pas commencé</a></td><td><a href=/UserTasks/Edit/" + data.id + ">Modifier</a> | <a href=/UserTasks/Delete/" + data.id + ">Supprimer</a></td></tr>"
             );
         })
         .fail(function () {
