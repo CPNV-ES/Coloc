@@ -1,29 +1,27 @@
-﻿$(document).ready(function () {
+﻿/*
+ * Description : Save or get data via Ajax request through this UserTasksApiController
+ * 
+ * Author : Julien Richoz / SI-T2a / CPNV-ES
+ * Date : 31.03.2019
+ * */
+
+$(document).ready(function () {
      /* Add new task to a user*/
     $("#add-task-user-button").on("click", function (e) {
-        console.log('AHAHAHA')
         e.preventDefault()
         //get input data
-        console.log("UserId: " + $("#task-user-add #userId").val())
-        console.log("task: " + $("#task-user-add #taskId").val())
-        console.log("begin Date: " + $("#task-user-add #beginDate").val())
-        console.log("end Date: " + $("#endDate").val())
-        //console.log("state: " + $("#task-user-add #state").val())
         var userId = $("#userId").val()
         var taskId = $("#taskId").val()
         var beginDate = $("#beginDate").val()
         var endDate = $("#endDate").val()
-        //var state = $("#state").val()
-        var state = 0 // Quand on ajoute une tâche, elle n'est pas commencée par défaut
-        //send data to api to store new vaucher
-        console.log('a')
-        add(taskId, userId, beginDate, endDate, state)
+        var state = 0 // We set the state of a task to 0 per default.
+
+        add(taskId, userId, beginDate, endDate, state, role)
     });
 });
 
-function add(taskId, userId, beginDate, endDate, state){
-    // use tha api to store a new purchase for the current customer and return a partial view without reload the page
-    console.log('b')
+// Add a new user task
+function add(taskId, userId, beginDate, endDate, state, role){
     $.ajax({
         accepts: "application/json",
         contentType: "application/json",
@@ -32,7 +30,6 @@ function add(taskId, userId, beginDate, endDate, state){
         data: JSON.stringify({ TaskId: taskId, UserId: userId, BeginTask: beginDate, EndTask: endDate, State: state}),
     })
         .done(function (data) {
-            console.log(data)
             getTask(data);
         })
         .fail(function () {
@@ -41,17 +38,14 @@ function add(taskId, userId, beginDate, endDate, state){
 };
 
 function update() {
-
+ // CHECKHERE
 }
 
+// Return tasks data so we can comeback to the last page
 function getTask(data) {
-
     data.beginTask = formatDate(data.beginTask)
     data.endTask = formatDate(data.endTask)
-    console.log(data.beginTask)
 
-    console.log("--------- IN FUNCTION GETTASK ------------")
-    console.log(data)
     $.ajax({
         accepts: "application/json",
         contentType: "application/json",
@@ -59,10 +53,9 @@ function getTask(data) {
         url: '/api/TasksApi/' + data.taskId,
     })
         .done(function (dataCallBack) {
-            console.log(dataCallBack);
             $("#show-usertasks-todo").append(
                 "<tr> \
-                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td>Pas commencé</td><td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/UserTasks/Delete/" + data.id + ">Supprimer</a></td></tr>"
+                    <td> "+ dataCallBack.description + "</td ><td>" + data.beginTask + "</td><td>" + data.endTask + "</td><td><a class='btn beginButton' href==/Tasks/Edit/" + data.id+"</a>Pas commencé</td><td><a href=/Tasks/Edit/" + data.id + ">Modifier</a> | <a href=/UserTasks/Delete/" + data.id + ">Supprimer</a></td></tr>"
             );
         })
         .fail(function () {
