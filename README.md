@@ -47,4 +47,4 @@ There is a login system in the application. Here are the credentials and informa
 | antonio@cpnv.ch   | Pa$$w0rd | User |
 | bastien@cpnv.ch   | Pa$$w0rd | User |
 
-Un administrateur possède les droits de modifications (ajouts de tâches, de Todos, assignation de tâche, visualisation des users etc.) alors qu'un user ne verra que ses tâches et pourra uniquement modifier les siennes.
+An administrator has modifications rights (add tasks, todo, can assign a task to an user, can visualize all user's tasks, etc.), when an user will only see his own tasks.
