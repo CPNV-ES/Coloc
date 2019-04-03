@@ -22,6 +22,7 @@ namespace Coloc.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public virtual DbSet<Logbookss> Logbookss { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<Todos> Todos { get; set; }
         public virtual DbSet<UserTasks> UserTasks { get; set; }
@@ -122,6 +123,20 @@ namespace Coloc.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.AspNetUserTokens)
                     .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<Logbookss>(entity =>
+            {
+                entity.Property(e => e.AspNetUserId).HasMaxLength(450);
+
+                entity.Property(e => e.EventDescription).HasColumnType("text");
+
+                entity.Property(e => e.Moment).HasColumnType("datetime");
+
+                entity.HasOne(d => d.AspNetUser)
+                    .WithMany(p => p.Logbookss)
+                    .HasForeignKey(d => d.AspNetUserId)
+                    .HasConstraintName("fk_madeby");
             });
 
             modelBuilder.Entity<Tasks>(entity =>

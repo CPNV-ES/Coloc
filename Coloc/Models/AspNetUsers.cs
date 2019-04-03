@@ -11,6 +11,7 @@ namespace Coloc.Models
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
+            Logbookss = new HashSet<Logbookss>();
             UserTasks = new HashSet<UserTasks>();
         }
 
@@ -34,6 +35,7 @@ namespace Coloc.Models
         public ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public ICollection<Logbookss> Logbookss { get; set; }
         public ICollection<UserTasks> UserTasks { get; set; }
     }
 }

@@ -64,6 +64,37 @@ function add(taskId, userId, beginDate, endDate, state){
         });
 };
 
+// Add in a Logbooks when a new task is created
+function addLog() {
+    /* Add new task to a user*/
+    $("edit-user-task-submit").on("click", function (e) {
+        console.log("hi")
+        e.preventDefault()
+        //get input data
+        var userId = $("#userId").val()
+       // var taskId = $("#taskId").val()
+        console.log(taskId)
+        var dateNow = new Date()
+        var description = "test"
+
+        // Add with api Logbookss controller
+        $.ajax({
+            accepts: "application/json",
+            contentType: "application/json",
+            type: "POST",
+            url: '/api/LogbookssApi',
+            data: JSON.stringify({ AspNetUserId: userId, Moment: dateNow, Description: description}),
+        })
+            .done(function (data) {
+                //getTask(data);
+                alert("Log ajouté");
+            })
+            .fail(function () {
+                alert("Log non ajouté");
+            });
+    });
+    
+}
 function update() {
  // CHECKHERE
 }

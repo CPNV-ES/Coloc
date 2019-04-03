@@ -82,6 +82,10 @@ namespace Coloc.Controllers
                                      Value = u.Id.ToString(),
                                      Text = u.Todo.Title + " - " + u.Title
                                  };
+            //.Where(r => r.TodoId.ToString().Contains()
+
+            ViewData["TodoList"] = new SelectList(_context.Todos, "Id", "Title");
+
             // If the user has no tasks, return an empty view
             if (userTasks == null)
             {

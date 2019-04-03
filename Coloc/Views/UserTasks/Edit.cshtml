@@ -18,7 +18,11 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="UserId" />
+
+            <label asp-for="UserId" class="control-label">Assigner tâche à :</label>
+            <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+
+
             <input type="hidden" asp-for="TaskId" />
             <div class="form-group">
                 <input type="hidden" asp-for="BeginTask" class="form-control" />
@@ -28,6 +32,7 @@
                 <input type="hidden" asp-for="EndTask" class="form-control" />
                 <span asp-validation-for="EndTask" class="text-danger"></span>
             </div>
+            <h5><b>Avancement de la tâche :</b></h5>
             <div class="form-group">
                 <select asp-for="State" class="form-control">
                     <option value=0>Pas commencé</option>
@@ -38,14 +43,18 @@
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="btn btn-success" type="submit" value="Sauvegarder" />
+                <input id="edit-user-task-submit" class="btn btn-success" type="submit" value="Sauvegarder" />
             </div>
         </form>
     </div>
     <a asp-controller="AspNetUsers" asp-action="Details" asp-route-id="@Model.UserId" style="position:absolute; bottom:15px; right:15px;" class="btn btn-warning">Retour aux tâches</a>
 </div>
 
-
+<environment include="Development">
+    <script src="~/js/tasksUser.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+</environment>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

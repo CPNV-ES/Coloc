@@ -151,6 +151,9 @@ namespace Coloc.Controllers
             var currentRole = User.FindFirstValue(ClaimTypes.Role);
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+
+
+
             if (currentRole == "User")
             {
                 if (userTasks.UserId != currentUserId)
@@ -158,7 +161,6 @@ namespace Coloc.Controllers
                     return RedirectToAction("Index", new RouteValueDictionary(
                         new { controller = "Home", action = "Index", Id = userTasks.UserId }));
                 }
-
             }
 
             if (ModelState.IsValid)
@@ -179,6 +181,10 @@ namespace Coloc.Controllers
                         throw;
                     }
                 }
+                // Add the event into the Logbooks
+                //EXAM
+                /*return RedirectToAction("Create", new RouteValueDictionary(
+                        new { controller = "Logbookss", action = "Create", Id = userTasks.UserId }));*/
 
                 // Redirect the user to the details vue of the user
                 if (id == userTasks.Id)
